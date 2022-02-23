@@ -1,5 +1,5 @@
 /**
- * @file terminalUpdates.h
+ * @file initializeElevator.h
  * @author your name (you@domain.com)
  * @brief 
  * @version 0.1
@@ -13,6 +13,8 @@
 
 #include "elevio.h"
 
-void initFloorUpdate();
+void initElevPos();
 
-void currentFloorUpdate();
+void checkStopButton();
+
+void floorIndicatorLight();
