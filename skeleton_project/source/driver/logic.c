@@ -3,21 +3,6 @@
 #include <time.h>
 #include <stdio.h>
 
-void holdDoor3Sec() {
-    int timer = 0;
-    while (timer < 300) {
-        if (elevio_stopButton() == 0) {
-            nanosleep(&(struct timespec){0, 10000000L}, NULL);
-            timer++;
-            printf("0.01s spent in loop: %d \n", timer);
-            
-        }
-        else {
-            break;
-        }   
-    }
-}
-
 void initOrderSystem(int** order) {
     for (int i=0; i<10; i++) {
         for (int j=0; j<2; j++) {

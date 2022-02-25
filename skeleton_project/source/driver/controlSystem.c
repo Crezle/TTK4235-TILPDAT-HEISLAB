@@ -9,11 +9,11 @@
 void initElevPos() {
     int floor = elevio_floorSensor();
     
-    assert(floor == -1 
+    assert((floor == -1 
     || floor == 0 
     || floor == 1 
     || floor == 2 
-    || floor == 3);
+    || floor == 3) && "Elevator not in a defined state");
 
     if (floor == -1) {
         initFloorUpdate();
@@ -26,6 +26,20 @@ void initElevPos() {
     currentFloorUpdate();
 }
 
+void wait3Sec() {
+    int timer = 0;
+    while (timer < 300) {
+        if (elevio_stopButton() == 0) {
+            nanosleep(&(struct timespec){0, 10000000L}, NULL);
+            timer++;
+            printf("0.01s spent in loop: %d \n", timer);
+            
+        }
+        else {
+            break;
+        }   
+    }
+}
 
 void checkStopButton() {
     if(elevio_stopButton() == 1) {
@@ -38,7 +52,7 @@ void checkStopButton() {
         }
         if((elevio_floorSensor() != -1)) {
             elevio_stopLamp(0);
-            holdDoor3Sec(); 
+            wait3Sec(); 
         }
         if(elevio_stopButton() == 0) {
             elevio_doorOpenLamp(0);
@@ -46,7 +60,6 @@ void checkStopButton() {
     }
     elevio_stopLamp(0);
 }
-
 
 // LAMPS
 

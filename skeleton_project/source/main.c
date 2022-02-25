@@ -11,7 +11,7 @@
 
 int main(){
 
-    int order[10][2]; //2D order array
+    //2D order array
 
     elevio_init();
     
