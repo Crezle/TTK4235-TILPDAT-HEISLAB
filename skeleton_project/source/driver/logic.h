@@ -6,14 +6,29 @@
  * @date 2022-02-25
  */
 
+#pragma once
+#include "elevio.h"
+#include <stdlib.h>
+#define MAX_ORDERS 10
 
-int order[10][2];
+/**
+ *  1st dimension contains orders
+ *  2nd dimension contains destination & direction
+ */
+typedef enum {STILL, MOVING, STOP}state;
+
+//GLOBALS
+int g_order[MAX_ORDERS][3];
+state currentState;
+MotorDirection g_currentDirection;
+int g_currentFloor;
+
 
 /** 
  * @brief Takes in an empty double array and fills it with default array values (0 and -1)
  * @param[in,out] order A double array containing destination and direction of orders
  */
-void initOrderSystem(int** order);
+void initOrderSystem();
 
 /**
  * @brief Loops through all buttons on each floor to check for orders. 
@@ -22,4 +37,10 @@ void initOrderSystem(int** order);
  * @param[in,out] order A double array containing destination and direction of orders
  */
 
-void addOrder(int** order);
+void checkButtons();
+
+void addOrderFromFloorPanel(int floor, int button);
+
+void addOrderFromCab(int floor);
+
+void move();

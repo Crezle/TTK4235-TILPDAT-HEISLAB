@@ -32,3 +32,5 @@ void checkStopButton();
  * @brief Changes floor indicator light if elevator reaches a defined floor.
  */
 void floorIndicatorLight();
+
+void resetButtons();
