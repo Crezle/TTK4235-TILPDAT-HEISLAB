@@ -12,7 +12,6 @@
 int main(){
 
     //2D order array
-
     elevio_init();
     
     //printf("=== Example Program ===\n");
@@ -20,16 +19,17 @@ int main(){
 
     //elevio_motorDirection(DIRN_UP);
     
-    initOrderSystem(order);
+    initOrderSystem();
     initElevPos();
+    g_currentDirection = 0;
+    elevio_motorDirection(DIRN_STOP);
 
     while(1){
 
-        floorIndicatorLight();
-
-        addOrder(order);
-
+        floorIndicatorLight(&g_currentFloor);
         checkStopButton();
+        checkButtons();
+        move();
 
         /* int floor = elevio_floorSensor();
         printf("floor: %d \n",floor); */
@@ -43,13 +43,7 @@ int main(){
             elevio_motorDirection(DIRN_DOWN);
         } */
 
-
-        /* for(int f = 0; f < N_FLOORS; f++){
-            for(int b = 0; b < N_BUTTONS; b++){
-                int btnPressed = elevio_callButton(f, b);
-                elevio_buttonLamp(f, b, btnPressed);
-            }
-        } */
+        //resetButtons();
 
         /* if(elevio_obstruction()){
             elevio_stopLamp(1);
@@ -61,6 +55,7 @@ int main(){
             elevio_motorDirection(DIRN_STOP);
             break;
         } */
+
 
         
         

@@ -44,6 +44,8 @@ void wait3Sec() {
 void checkStopButton() {
     if(elevio_stopButton() == 1) {
         elevio_motorDirection(DIRN_STOP);
+        resetButtons();
+        initOrderSystem();
         while(elevio_stopButton() == 1) {
             elevio_stopLamp(1);
             if ((elevio_floorSensor() != -1)) {
@@ -61,12 +63,21 @@ void checkStopButton() {
     elevio_stopLamp(0);
 }
 
+void resetButtons() {
+    for(int f = 0; f < N_FLOORS; f++){
+        for(int b = 0; b < N_BUTTONS; b++){
+            elevio_buttonLamp(f, b, 0);
+        }
+    }
+}
+
 // LAMPS
 
-void floorIndicatorLight() {
+void floorIndicatorLight(int* currentFloor) {
     int floor = elevio_floorSensor();
     if (floor >= 0 && floor <= 3) {
         elevio_floorIndicator(floor);
+        *currentFloor = floor;
     }
 }
 
