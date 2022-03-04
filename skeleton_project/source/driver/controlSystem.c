@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void initElevPos() {
+void initElevPos(state* currentState, int* currentDirection) {
     int floor = elevio_floorSensor();
     
     assert((floor == -1 
@@ -20,10 +20,12 @@ void initElevPos() {
     }
     while (floor == -1) {
         elevio_motorDirection(DIRN_UP);
+        *currentDirection = 0;
         floor = elevio_floorSensor();
     }
     elevio_motorDirection(DIRN_STOP);
     currentFloorUpdate();
+    *currentState = STILL;
 }
 
 void wait3Sec() {

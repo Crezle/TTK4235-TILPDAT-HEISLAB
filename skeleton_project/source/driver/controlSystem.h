@@ -9,12 +9,13 @@
 #pragma once
 
 #include "elevio.h"
+#include "logic.h"
 
 /**
  * @brief Initializes elevator by moving it 
  * upwards until it reaches a defined floor.
  */
-void initElevPos();
+void initElevPos(state* currentState, int* currentDirection);
 
 /**
  * @brief System sleeps for 3 seconds. 
@@ -31,6 +32,6 @@ void checkStopButton();
 /**
  * @brief Changes floor indicator light if elevator reaches a defined floor.
  */
-void floorIndicatorLight();
+void floorIndicatorLight(int* currentFloor);
 
 void resetButtons();

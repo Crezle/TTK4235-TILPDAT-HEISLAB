@@ -11,50 +11,51 @@
 
 int main(){
 
-    //2D order array
     elevio_init();
-    
-    //printf("=== Example Program ===\n");
-    //printf("Press the stop button on the elevator panel to exit\n");
-
-    //elevio_motorDirection(DIRN_UP);
-    
     initOrderSystem();
-    initElevPos();
+    initElevPos(&currentState, &g_currentDirection);
     g_currentDirection = 0;
     elevio_motorDirection(DIRN_STOP);
 
     while(1){
 
-        floorIndicatorLight(&g_currentFloor);
-        checkStopButton();
-        checkButtons();
-        move();
-
-        /* int floor = elevio_floorSensor();
-        printf("floor: %d \n",floor); */
-
-
-        /* if(floor == 0){
-            elevio_motorDirection(DIRN_UP);
-        }
-
-        if(floor == N_FLOORS-1){
-            elevio_motorDirection(DIRN_DOWN);
-        } */
-
-        //resetButtons();
-
-        /* if(elevio_obstruction()){
-            elevio_stopLamp(1);
-        } else {
-            elevio_stopLamp(0);
-        } */
         
-        /* if(elevio_stopButton()){
-            elevio_motorDirection(DIRN_STOP);
+
+        floorIndicatorLight(&g_lastDefinedFloor);
+
+        switch (currentState)
+        {
+        case STILL:
+            if (elevio_stopButton() == 1) {
+                currentState = STOP;
+            }
+
+            checkButtons();
+            move(&currentState, &g_currentDirection);
+            removeOrder(&g_currentDirection, &currentState);
+
             break;
-        } */
+
+        case MOVING:
+            if (elevio_stopButton() == 1) {
+                currentState = STOP;
+            }
+            else if (numberOfOrders() == 0) {
+                currentState = STILL;
+                elevio_motorDirection(DIRN_STOP);
+            }
+
+            checkButtons();
+            removeOrder(&g_currentDirection, &currentState);
+
+            break;
+
+        case STOP:
+
+            checkStopButton();
+            break;
+        }
+        
 
 
         

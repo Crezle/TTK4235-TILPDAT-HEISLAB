@@ -21,7 +21,7 @@ typedef enum {STILL, MOVING, STOP}state;
 int g_order[MAX_ORDERS][3];
 state currentState;
 MotorDirection g_currentDirection;
-int g_currentFloor;
+int g_lastDefinedFloor;
 
 
 /** 
@@ -43,4 +43,10 @@ void addOrderFromFloorPanel(int floor, int button);
 
 void addOrderFromCab(int floor);
 
-void move();
+void move(state* currentState, int* currentDirection);
+
+void removeOrder(int* currentDirection, state* currentState);
+
+int numberOfOrders();
+
+int checkOrderInDirection(int direction);
