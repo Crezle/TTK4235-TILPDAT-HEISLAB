@@ -31,7 +31,7 @@ int main(){
             }
 
             checkButtons();
-            move(&currentState, &g_currentDirection);
+            chooseDirection(&currentState, &g_currentDirection);
             removeOrder(&g_currentDirection, &currentState);
 
             break;
@@ -53,6 +53,9 @@ int main(){
         case STOP:
 
             checkStopButton();
+            if (elevio_stopButton() == 0) {
+                currentState = STILL;
+            }
             break;
         }
         

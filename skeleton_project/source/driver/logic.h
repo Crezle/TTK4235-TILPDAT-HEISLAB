@@ -10,6 +10,9 @@
 #include "elevio.h"
 #include <stdlib.h>
 #define MAX_ORDERS 10
+#define UP 0
+#define DOWN 1
+#define CAB 2
 
 /**
  *  1st dimension contains orders
@@ -43,7 +46,7 @@ void addOrderFromFloorPanel(int floor, int button);
 
 void addOrderFromCab(int floor);
 
-void move(state* currentState, int* currentDirection);
+void chooseDirection(state* currentState, int* currentDirection);
 
 void removeOrder(int* currentDirection, state* currentState);
 
