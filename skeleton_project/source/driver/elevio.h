@@ -1,9 +1,9 @@
 /**
  * @file elevio.h
  * @author Christian & Ida
- * @brief Defines basic functions for elevator control
+ * @brief Module that contains basic functions for elevator control
  * @version 0.1
- * @date 2022-02-21
+ * @date 2022-02-25
  */
 
 

@@ -1,0 +1,17 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/student/Downloads/skeleton_project'
+mkdir -p build/driver
+clang -o build/driver/controlSystem.o -c -Wall -g -std=gnu11 -fsanitize=address source/driver/controlSystem.c
+mkdir -p build/driver
+clang -o build/driver/logic.o -c -Wall -g -std=gnu11 -fsanitize=address source/driver/logic.c
+mkdir -p build/driver
+clang -o build/driver/terminalUpdates.o -c -Wall -g -std=gnu11 -fsanitize=address source/driver/terminalUpdates.c
+mkdir -p build/driver
+clang -o build/driver/elevio.o -c -Wall -g -std=gnu11 -fsanitize=address source/driver/elevio.c
+mkdir -p build/driver
+clang -o build/driver/kladd.o -c -Wall -g -std=gnu11 -fsanitize=address source/driver/kladd.c
+mkdir -p build
+clang -o build/main.o -c -Wall -g -std=gnu11 -fsanitize=address source/main.c
+clang build/driver/controlSystem.o build/driver/logic.o build/driver/terminalUpdates.o build/driver/elevio.o build/driver/kladd.o build/main.o -o elevator -fsanitize=address
+make: Leaving directory '/home/student/Downloads/skeleton_project'
+ 
