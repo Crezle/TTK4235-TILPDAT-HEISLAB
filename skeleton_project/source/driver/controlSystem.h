@@ -21,13 +21,13 @@ void initElevPos(state* currentState, int* currentDirection);
  * @brief System sleeps for 3 seconds. 
  * Stop button breaks sleep and exits function.
  */
-void wait3Sec();
+void wait3Sec(state* currentState, int* doorState);
 
 /**
  * @brief Checks if stop button is pressed. If pressed, motor stops.
  * Door opens if elevator is on a defined floor.
  */
-void checkStopButton();
+void stopAndReset(state* currentState);
 
 /**
  * @brief Changes floor indicator light if elevator reaches a defined floor.

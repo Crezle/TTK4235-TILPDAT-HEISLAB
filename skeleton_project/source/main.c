@@ -20,7 +20,7 @@ int main(){
     while(1){
 
         
-
+        stopAndReset(&currentState);
         floorIndicatorLight(&g_lastDefinedFloor);
 
         switch (currentState)
@@ -33,7 +33,6 @@ int main(){
             checkButtons();
             chooseDirection(&currentState, &g_currentDirection);
             removeOrder(&g_currentDirection, &currentState);
-
             break;
 
         case MOVING:
@@ -47,15 +46,19 @@ int main(){
 
             checkButtons();
             removeOrder(&g_currentDirection, &currentState);
-
             break;
 
-        case STOP:
-
-            checkStopButton();
+        case STOP: 
+            if (elevio_floorSensor() != -1) {
+                elevio_doorOpenLamp(1);
+                g_doorState = 1;
+            }
             if (elevio_stopButton() == 0) {
+                elevio_stopLamp(0);
+                wait3Sec(&currentState, &g_doorState);
                 currentState = STILL;
             }
+            
             break;
         }
         

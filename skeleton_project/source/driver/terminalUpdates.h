@@ -20,3 +20,5 @@ void initFloorUpdate();
  * @brief Prints current elevator floor
  */
 void currentFloorUpdate();
+
+void printOrderArray();

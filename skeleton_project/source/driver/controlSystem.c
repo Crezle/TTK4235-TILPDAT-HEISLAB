@@ -28,41 +28,47 @@ void initElevPos(state* currentState, int* currentDirection) {
     *currentState = STILL;
 }
 
-void wait3Sec() {
-    int timer = 0;
-    while (timer < 300) {
-        if (elevio_stopButton() == 0) {
-            nanosleep(&(struct timespec){0, 10000000L}, NULL);
-            timer++;
-            printf("0.01s spent in loop: %d \n", timer);
-            
+void wait3Sec(state* currentState, int* doorState) {
+    if (elevio_floorSensor() != -1) {
+        elevio_doorOpenLamp(1);
+        *doorState = 1;
+        *currentState = STILL;
+        int timer = 0;
+        int seconds = 0;
+        int tenths = 0;
+        printf("Current floor: %d\n\n", g_lastDefinedFloor);
+        printf("Current sensor: %d\n\n", elevio_floorSensor());
+        while (timer < 30) {
+            if (elevio_stopButton() == 0 && elevio_obstruction() == 0) {
+                checkButtons();
+                removeAllOrdersOnFloor(g_lastDefinedFloor);
+                nanosleep(&(struct timespec){0, 100000000L}, NULL);
+                timer++;
+                tenths = timer % 10;
+                seconds = (timer - tenths)/10;
+                printf("[%d.%ds out of 3.0s]\n", seconds, tenths);
+            }
+            else {
+                if (elevio_stopButton()) {
+                    *currentState = STOP;
+                }
+                return;
+            }   
         }
-        else {
-            break;
-        }   
+        elevio_doorOpenLamp(0);
+        *doorState = 0;
+        printf("\n");
     }
 }
 
-void checkStopButton() {
+void stopAndReset(state* currentState) {
     if(elevio_stopButton() == 1) {
         elevio_motorDirection(DIRN_STOP);
+        *currentState = STOP;
         resetButtons();
         initOrderSystem();
-        while(elevio_stopButton() == 1) {
-            elevio_stopLamp(1);
-            if ((elevio_floorSensor() != -1)) {
-                elevio_doorOpenLamp(1);
-            }
-        }
-        if((elevio_floorSensor() != -1)) {
-            elevio_stopLamp(0);
-            wait3Sec(); 
-        }
-        if(elevio_stopButton() == 0) {
-            elevio_doorOpenLamp(0);
-        }
+        elevio_stopLamp(1);
     }
-    elevio_stopLamp(0);
 }
 
 void resetButtons() {

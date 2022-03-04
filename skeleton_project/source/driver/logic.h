@@ -23,8 +23,9 @@ typedef enum {STILL, MOVING, STOP}state;
 //GLOBALS
 int g_order[MAX_ORDERS][3];
 state currentState;
-MotorDirection g_currentDirection;
+int g_currentDirection;
 int g_lastDefinedFloor;
+int g_doorState;
 
 
 /** 
@@ -53,3 +54,5 @@ void removeOrder(int* currentDirection, state* currentState);
 int numberOfOrders();
 
 int checkOrderInDirection(int direction);
+
+int removeAllOrdersOnFloor(int removedFloor);
