@@ -16,13 +16,13 @@
 #include <time.h>
 
 /**
- * @brief Initializes elevator by moving it 
+ * @brief Initializes elevator by moving it
  * upwards until it reaches a defined floor.
  */
 void initElevPos();
 
 /**
- * @brief System sleeps for 3 seconds. 
+ * @brief System sleeps for 3 seconds.
  * Stop button breaks sleep and exits function.
  */
 void holdDoor3Seconds();

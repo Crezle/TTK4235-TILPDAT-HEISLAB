@@ -13,18 +13,20 @@
 #include "hardwareControl.h"
 #include "terminalUpdates.h"
 
-
-/** 
- * @brief Takes in an empty double array and fills it with default array values (0 and -1)
- * @param[in,out] order A double array containing destination and direction of orders
+/**
+ * @brief Takes in an empty double array and fills it with default array values
+ * (0 and -1)
+ * @param[in,out] order A double array containing destination and direction of
+ * orders
  */
 void initOrderSystem();
 
 /**
- * @brief Loops through all buttons on each floor to check for orders. 
+ * @brief Loops through all buttons on each floor to check for orders.
  * Adds order information to the order array
- * 
- * @param[in,out] order A double array containing destination and direction of orders
+ *
+ * @param[in,out] order A double array containing destination and direction of
+ * orders
  */
 
 void addOrderFromFloorPanel(int floor, int button);

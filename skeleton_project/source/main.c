@@ -3,72 +3,62 @@
 #include "driver/logic.h"
 #include "driver/terminalUpdates.h"
 
+int main() {
 
+  // INITIALIZE SYSTEM
+  elevio_init();
+  initOrderSystem();
+  initElevPos();
 
-int main(){
+  while (1) {
 
-    //INITIALIZE SYSTEM
-    elevio_init();
-    initOrderSystem();
-    initElevPos();
+    stopAndReset();
+    floorIndicatorLight();
 
-    while(1){
+    switch (currentState) {
+    case STILL:
+      if (elevio_stopButton() == 1) {
+        currentState = STOP;
+      }
 
-        
-        stopAndReset();
-        floorIndicatorLight();
+      lookForNewOrders();
+      moveElevator(chooseDirection());
+      // completeOrder(&currentState);
+      if (g_isDoorOpen && elevio_obstruction() == 0) {
+        holdDoor3Seconds();
+      }
+      break;
 
-        switch (currentState)
-        {
-        case STILL:
-            if (elevio_stopButton() == 1) {
-                currentState = STOP;
-            }
+    case MOVING:
+      if (elevio_stopButton() == 1) {
+        currentState = STOP;
+      } else if (numberOfOrders() == 0) {
+        currentState = STILL;
+        elevio_motorDirection(DIRN_STOP);
+      }
 
-            lookForNewOrders();
-            moveElevator(chooseDirection());
-            //completeOrder(&currentState);
-            if (g_isDoorOpen && elevio_obstruction() == 0) {
-                holdDoor3Seconds();
-            }
-            break;
+      lookForNewOrders();
+      if (completeOrder()) {
+        holdDoor3Seconds();
+      };
+      break;
 
-        case MOVING:
-            if (elevio_stopButton() == 1) {
-                currentState = STOP;
-            }
-            else if (numberOfOrders() == 0) {
-                currentState = STILL;
-                elevio_motorDirection(DIRN_STOP);
-            }
+    case STOP:
+      if (elevio_floorSensor() != -1) {
+        elevio_doorOpenLamp(1);
+        g_isDoorOpen = 1;
+      }
+      if (elevio_stopButton() == 0) {
+        elevio_stopLamp(0);
+        holdDoor3Seconds();
+        currentState = STILL;
+      }
 
-            lookForNewOrders();
-            if (completeOrder()) {
-                holdDoor3Seconds();
-            };
-            break;
-
-        case STOP: 
-            if (elevio_floorSensor() != -1) {
-                elevio_doorOpenLamp(1);
-                g_isDoorOpen = 1;
-            }
-            if (elevio_stopButton() == 0) {
-                elevio_stopLamp(0);
-                holdDoor3Seconds();
-                currentState = STILL;
-            }
-            
-            break;
-        }
-        
-
-
-        
-        
-        
-        nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);
+      break;
     }
 
-    return 0;
+    nanosleep(&(struct timespec){0, 20 * 1000 * 1000}, NULL);
+  }
+
+  return 0;
 }
