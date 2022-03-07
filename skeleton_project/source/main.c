@@ -1,9 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <time.h>
 #include "driver/elevio.h"
-#include "driver/controlSystem.h"
+#include "driver/hardwareControl.h"
 #include "driver/logic.h"
 #include "driver/terminalUpdates.h"
 
@@ -11,17 +7,16 @@
 
 int main(){
 
+    //INITIALIZE SYSTEM
     elevio_init();
     initOrderSystem();
-    initElevPos(&currentState, &g_currentDirection);
-    g_currentDirection = 0;
-    elevio_motorDirection(DIRN_STOP);
+    initElevPos();
 
     while(1){
 
         
-        stopAndReset(&currentState);
-        floorIndicatorLight(&g_lastDefinedFloor);
+        stopAndReset();
+        floorIndicatorLight();
 
         switch (currentState)
         {
@@ -30,9 +25,12 @@ int main(){
                 currentState = STOP;
             }
 
-            checkButtons();
-            chooseDirection(&currentState, &g_currentDirection);
-            removeOrder(&g_currentDirection, &currentState);
+            lookForNewOrders();
+            moveElevator(chooseDirection());
+            //completeOrder(&currentState);
+            if (g_isDoorOpen && elevio_obstruction() == 0) {
+                holdDoor3Seconds();
+            }
             break;
 
         case MOVING:
@@ -44,18 +42,20 @@ int main(){
                 elevio_motorDirection(DIRN_STOP);
             }
 
-            checkButtons();
-            removeOrder(&g_currentDirection, &currentState);
+            lookForNewOrders();
+            if (completeOrder()) {
+                holdDoor3Seconds();
+            };
             break;
 
         case STOP: 
             if (elevio_floorSensor() != -1) {
                 elevio_doorOpenLamp(1);
-                g_doorState = 1;
+                g_isDoorOpen = 1;
             }
             if (elevio_stopButton() == 0) {
                 elevio_stopLamp(0);
-                wait3Sec(&currentState, &g_doorState);
+                holdDoor3Seconds();
                 currentState = STILL;
             }
             

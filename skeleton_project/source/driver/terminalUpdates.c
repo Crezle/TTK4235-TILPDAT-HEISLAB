@@ -1,13 +1,10 @@
 #include "terminalUpdates.h"
-#include "logic.h"
-#include <stdio.h>
-#include <stdlib.h>
 
-void initFloorUpdate() {
+void printInitFloorUpdate() {
     printf("Not at a defined floor, moving elevator upwards until floor is defined. \n");
 }
 
-void currentFloorUpdate() {
+void printCurrentFloorUpdate() {
     printf("Arrived at floor: %d \n\n", elevio_floorSensor());
 }
 
@@ -17,5 +14,12 @@ void printOrderArray() {
             printf("Order nr: %d \n", i);
             printf("Destination: %d, Direction: %d, isCab: %d \n\n", g_order[i][0], g_order[i][1], g_order[i][2]);
         }
+    }
+}
+
+void printDoorTimer(int seconds, int tenths) {
+    printf("[%d.%ds out of 3.0s]\n", seconds, tenths);
+    if (seconds == 3) {
+        printf("\n");
     }
 }

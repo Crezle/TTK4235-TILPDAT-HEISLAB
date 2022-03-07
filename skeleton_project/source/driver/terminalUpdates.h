@@ -9,16 +9,19 @@
 #pragma once
 
 #include "elevio.h"
-
+#include "globals.h"
+#include <stdio.h>
 
 /**
  * @brief Prints elevator initialization status
  */
-void initFloorUpdate();
+void printInitFloorUpdate();
 
 /**
  * @brief Prints current elevator floor
  */
-void currentFloorUpdate();
+void printCurrentFloorUpdate();
 
 void printOrderArray();
+
+void printDoorTimer(int seconds, int tenths);

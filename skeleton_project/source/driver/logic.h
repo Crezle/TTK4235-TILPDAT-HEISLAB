@@ -7,25 +7,11 @@
  */
 
 #pragma once
+
 #include "elevio.h"
-#include <stdlib.h>
-#define MAX_ORDERS 10
-#define UP 0
-#define DOWN 1
-#define CAB 2
-
-/**
- *  1st dimension contains orders
- *  2nd dimension contains destination & direction
- */
-typedef enum {STILL, MOVING, STOP}state;
-
-//GLOBALS
-int g_order[MAX_ORDERS][3];
-state currentState;
-int g_currentDirection;
-int g_lastDefinedFloor;
-int g_doorState;
+#include "globals.h"
+#include "hardwareControl.h"
+#include "terminalUpdates.h"
 
 
 /** 
@@ -41,18 +27,14 @@ void initOrderSystem();
  * @param[in,out] order A double array containing destination and direction of orders
  */
 
-void checkButtons();
-
 void addOrderFromFloorPanel(int floor, int button);
 
 void addOrderFromCab(int floor);
 
-void chooseDirection(state* currentState, int* currentDirection);
+MotorDirection chooseDirection();
 
-void removeOrder(int* currentDirection, state* currentState);
+int completeOrder();
 
 int numberOfOrders();
-
-int checkOrderInDirection(int direction);
 
 int removeAllOrdersOnFloor(int removedFloor);

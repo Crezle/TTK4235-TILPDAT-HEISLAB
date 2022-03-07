@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "terminalupdates.h": "c"
+        "terminalupdates.h": "c",
+        "stdlib.h": "c",
+        "logic.h": "c",
+        "elevio.h": "c"
     }
 }
