@@ -1,9 +1,9 @@
 /**
- * @file hardwareControl.h
+ * @file controlSystem.h
  * @author Christian & Ida
- * @brief Module that contains functions for control of hardware
- * @version 1.0
- * @date 2022-03-09
+ * @brief Module that interacts directly with hardware
+ * @version 0.1
+ * @date 2022-02-25
  */
 
 #pragma once
@@ -16,15 +16,14 @@
 #include <time.h>
 
 /**
- * @brief Initializes elevator by moving it
- * upwards until it reaches a defined floor
+ * @brief Initializes elevator by moving it 
+ * upwards until it reaches a defined floor.
  */
 void initElevPos();
 
 /**
- * @brief System opens door for 3 seconds if elevator is on a defined floor.
- * Stop button or obstruction resets this timer, and door only closes if not interrupted
- * by these for 3 seconds.
+ * @brief System sleeps for 3 seconds. 
+ * Stop button breaks sleep and exits function.
  */
 void holdDoor3Seconds();
 
