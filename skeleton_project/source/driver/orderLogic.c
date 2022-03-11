@@ -28,7 +28,7 @@ void addOrderFromFloorPanel(int floor, int button) {
 
 void addOrderFromCab(int floor) {
   for (int i = 0; i < MAX_ORDERS; i++) {
-    if ((g_order[i][0] == floor) && (g_order[i][2] == 1)) {
+    if ((g_order[i][0] == floor) && (g_order[i][2] == TRUE)) {
       return;
     }
   }
@@ -87,7 +87,7 @@ int completeOrder() {
 }
 
 MotorDirection chooseDirection() {
-  if (g_isDoorOpen == 0 && numberOfOrders() > 0) {
+  if (g_isDoorOpen == FALSE && numberOfOrders() > 0) {
     if (g_currentDirection == UP) {
       for (int i = 0; i < MAX_ORDERS; i++) {
         if (g_order[i][0] > g_lastDefinedFloor && g_order[i][0] != UNDEFINED) {

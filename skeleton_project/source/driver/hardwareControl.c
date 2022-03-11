@@ -5,15 +5,15 @@ void initElevPos() {
   elevatorDoor(CLOSE);
   resetButtons();
   assert(
-      (floor == -1 || floor == 0 || floor == 1 || floor == 2 || floor == 3) &&
+      (floor == UNDEFINED || floor == 0 || floor == 1 || floor == 2 || floor == 3) &&
       "Elevator not in a defined state");
 
-  if (floor == -1) {
+  if (floor == UNDEFINED) {
     //printInitFloorUpdate();
   }
-  while (floor == -1) {
+  while (floor == UNDEFINED) {
     elevio_motorDirection(DIRN_UP);
-    g_currentDirection = 0;
+    g_currentDirection = UP;
     floor = elevio_floorSensor();
   }
   elevio_motorDirection(DIRN_STOP);
@@ -65,5 +65,3 @@ void elevatorStandstill() {
   elevio_motorDirection(DIRN_STOP);
   g_currentState = STILL;
 }
-
-
