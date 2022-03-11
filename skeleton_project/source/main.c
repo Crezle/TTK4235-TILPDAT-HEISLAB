@@ -1,74 +1,65 @@
 #include "driver/elevio.h"
 #include "driver/hardwareControl.h"
-#include "driver/logic.h"
+#include "driver/orderLogic.h"
 #include "driver/terminalUpdates.h"
 
+int main() {
 
+  // INITIALIZE SYSTEM
+  elevio_init();
+  initOrderSystem();
+  initElevPos();
 
-int main(){
+  while (1) {
+    
+    if (elevio_stopButton() == PRESSED) {
+      stopElevator();
+    }
+    
+    floorIndicatorLight();
 
-    //INITIALIZE SYSTEM
-    elevio_init();
-    initOrderSystem();
-    initElevPos();
+    switch (g_currentState) {
 
-    while(1){
-
-        
-        stopAndReset();
-        floorIndicatorLight();
-
-        switch (currentState)
-        {
-        case STILL:
-            if (elevio_stopButton() == 1) {
-                currentState = STOP;
-            }
-
-            lookForNewOrders();
-            moveElevator(chooseDirection());
-            //completeOrder(&currentState);
-            if (g_isDoorOpen && elevio_obstruction() == 0) {
-                holdDoor3Seconds();
-            }
-            break;
-
-        case MOVING:
-            if (elevio_stopButton() == 1) {
-                currentState = STOP;
-            }
-            else if (numberOfOrders() == 0) {
-                currentState = STILL;
-                elevio_motorDirection(DIRN_STOP);
-            }
-
-            lookForNewOrders();
-            if (completeOrder()) {
-                holdDoor3Seconds();
-            };
-            break;
-
-        case STOP: 
-            if (elevio_floorSensor() != -1) {
-                elevio_doorOpenLamp(1);
-                g_isDoorOpen = 1;
-            }
-            if (elevio_stopButton() == 0) {
-                elevio_stopLamp(0);
-                holdDoor3Seconds();
-                currentState = STILL;
-            }
-            
-            break;
+    case STILL:
+      lookForNewOrders();
+      moveElevator(chooseDirection());
+      if (g_isDoorOpen && elevio_obstruction() == ABSENT) {
+        elevatorDoor(OPEN);
+        if (wait3Sec()) {
+          elevatorDoor(CLOSE);
         }
-        
+      }
+      break;
 
+    case MOVING:
+      lookForNewOrders();
+      if (completeOrder()) {
+        elevatorStandstill();
+        elevatorDoor(OPEN);
+        if (wait3Sec()) {
+          elevatorDoor(CLOSE);
+        }
+      };
+      break;
 
-        
-        
-        
-        nanosleep(&(struct timespec){0, 20*1000*1000}, NULL);
+    case STOP:
+      initOrderSystem();
+      if (elevio_stopButton() == NOT_PRESSED) {
+        elevio_stopLamp(0);
+        if (elevio_floorSensor() != UNDEFINED) {
+          elevatorDoor(OPEN);
+          if (wait3Sec()) {
+            elevatorDoor(CLOSE);
+          }
+        }
+        g_currentState = STILL;
+      }
+
+      break;
     }
 
-    return 0;
+    nanosleep(&(struct timespec){0, 20 * 1000 * 1000}, NULL);
+  }
+
+  return 0;
 }

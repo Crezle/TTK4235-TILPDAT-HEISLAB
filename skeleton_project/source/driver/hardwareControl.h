@@ -1,47 +1,55 @@
 /**
- * @file controlSystem.h
+ * @file hardwareControl.h
  * @author Christian & Ida
- * @brief Module that interacts directly with hardware
- * @version 0.1
- * @date 2022-02-25
+ * @brief Module that contains functions for control of hardware
+ * @version 1.0
+ * @date 2022-03-09
  */
 
 #pragma once
 
 #include "elevio.h"
 #include "globals.h"
-#include "logic.h"
-#include "terminalUpdates.h"
 #include <assert.h>
-#include <time.h>
 
 /**
- * @brief Initializes elevator by moving it 
- * upwards until it reaches a defined floor.
+ * @brief Resets all lamps, then initializes elevator by moving it
+ * upwards until it reaches a defined floor and changes
+ * state to @c STILL
  */
 void initElevPos();
 
 /**
- * @brief System sleeps for 3 seconds. 
- * Stop button breaks sleep and exits function.
+ * @brief Closes and opens door based on input
  */
-void holdDoor3Seconds();
+void elevatorDoor(int action);
 
 /**
- * @brief Checks if stop button is pressed. If pressed, motor stops.
- * Door opens if elevator is on a defined floor.
+ * @brief If stop button is pressed, motor stops, order button lamps turn off, 
+ * turns on the stop button lamp and changes state to @c STOP
  */
-void stopAndReset();
+void stopElevator();
 
 /**
- * @brief Changes floor indicator light if elevator reaches a defined floor.
+ * @brief Changes floor indicator light if elevator is on a defined floor 
+ * that is different from last defined floor
  */
 void floorIndicatorLight();
 
+/**
+ * @brief Turns off all order button lamps
+ */
 void resetButtons();
 
+/**
+ * @brief Moves elevator in a direction determined
+ * by the input parameter, changes state to @c MOVING if
+ * a move input is given
+ * @param[in] direction a @c MotorDirection
+ */
 void moveElevator(MotorDirection direction);
 
-void elevatorDropOff();
-
-void lookForNewOrders();
+/**
+ * @brief Stops elevator and changes state to @c STILL
+ */
+void elevatorStandstill();
