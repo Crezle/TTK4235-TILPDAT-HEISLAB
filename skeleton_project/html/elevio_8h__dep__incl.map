@@ -1,8 +1,0 @@
-<map id="source/driver/elevio.h" name="source/driver/elevio.h">
-<area shape="rect" id="node2" href="$controlSystem_8h.html" title="Module that interacts directly with hardware. " alt="" coords="5,80,201,107"/>
-<area shape="rect" id="node4" href="$terminalUpdates_8h.html" title="Module for printing in terminal. " alt="" coords="225,80,432,107"/>
-<area shape="rect" id="node6" href="$elevio_8c_source.html" title="source/driver/elevio.c" alt="" coords="457,80,603,107"/>
-<area shape="rect" id="node7" href="$logic_8c_source.html" title="source/driver/logic.c" alt="" coords="627,80,766,107"/>
-<area shape="rect" id="node3" href="$controlSystem_8c_source.html" title="source/driver/controlSystem.c" alt="" coords="5,155,201,181"/>
-<area shape="rect" id="node5" href="$terminalUpdates_8c_source.html" title="source/driver/terminalUpdates.c" alt="" coords="225,155,432,181"/>
-</map>
