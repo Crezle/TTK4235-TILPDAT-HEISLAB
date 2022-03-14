@@ -2,17 +2,17 @@
  * @file elevio.h
  * @author Christian & Ida
  * @brief Module that contains basic functions for elevator control
- * @version 0.1
- * @date 2022-02-25
+ * @version 1.1
+ * @date 2022-03-12
  */
 
 #pragma once
+#define N_FLOORS 4
+#define N_BUTTONS 3
 
 /**
  * @brief An enum which represents elevator direction
  */
-#define N_FLOORS 4
-
 typedef enum {
   DIRN_DOWN = -1, /** */
   DIRN_STOP = 0,  /** */
@@ -20,10 +20,8 @@ typedef enum {
 } MotorDirection;
 
 /**
- * @brief An enum relating buttons for a given floor to numbers
+ * @brief An enum for button types
  */
-#define N_BUTTONS 3
-
 typedef enum {
   BUTTON_HALL_UP = 0,
   BUTTON_HALL_DOWN = 1,
@@ -40,48 +38,50 @@ void elevio_init(void);
 /**
  * @brief Sends a direction command to elevator motor
  *
- * @param[in] dirn a @c MotorDirection
+ * @param[in] dirn is a @c MotorDirection enum value
  */
 void elevio_motorDirection(MotorDirection dirn);
 /**
- * @brief Sends a on/off command to elevator button lamps
+ * @brief Sends an on/off command to elevator button lamps
  *
- * @param[in] floor floor corresponding to button pressed
- * @param[in] button button pressed
- * @param[in] value boolean value for on or off
+ * @param[in] floor is the floor corresponding to button pressed
+ * @param[in] button is a @c ButtonType value corresponding to type of button pressed
+ * @param[in] value is a boolean value representing on/off
  */
 void elevio_buttonLamp(int floor, ButtonType button, int value);
 /**
- * @brief Sends a command for which floor light to activate
+ * @brief Sends a command for which floor light to activate.
+ * Also turns off any other floor lights
  *
- * @param[in] floor current floor number
+ * @param[in] floor is current floor number
  */
 void elevio_floorIndicator(int floor);
 /**
  * @brief Sends a on/off command for "open door" indicator lamp
  *
- * @param[in] value boolean value for on or off
+ * @param[in] value is a boolean value for on/off
  */
 void elevio_doorOpenLamp(int value);
 /**
  * @brief Sends a on/off command for stop button indicator lamp
  *
- * @param[in] value boolean value for on or off
+ * @param[in] value is a boolean value for on/off
  */
 void elevio_stopLamp(int value);
 
 /**
  * @brief Checks if a given button is pressed
  *
- * @param[in] floor current floor number
- * @param[in] button button pressed
- * @return boolean value for the given button
+ * @param[in] floor is the floor corresponding to button
+ * @param[in] button is a @c ButtonType value corresponding to type of button
+ * @return boolean value for current button state
  */
 int elevio_callButton(int floor, ButtonType button);
+
 /**
  * @brief Checks if elevator is on a defined floor, and if so, which one
  *
- * @return floor number on floor detection, -1 if undefined
+ * @return floor number on floor detection, -1 if @c UNDEFINED
  */
 int elevio_floorSensor(void);
 /**

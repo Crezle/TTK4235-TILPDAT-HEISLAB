@@ -23,11 +23,8 @@ int main() {
     case STILL:
       lookForNewOrders();
       moveElevator(chooseDirection());
-      if (g_isDoorOpen && elevio_obstruction() == ABSENT) {
-        elevatorDoor(OPEN);
-        if (wait3Sec()) {
-          elevatorDoor(CLOSE);
-        }
+      if (g_isDoorOpen && wait3Sec() == COMPLETED) {
+        elevatorDoor(CLOSE);
       }
       break;
 
@@ -36,7 +33,7 @@ int main() {
       if (completeOrder()) {
         elevatorStandstill();
         elevatorDoor(OPEN);
-        if (wait3Sec()) {
+        if (wait3Sec() == COMPLETED) {
           elevatorDoor(CLOSE);
         }
       };
@@ -48,11 +45,11 @@ int main() {
         elevio_stopLamp(0);
         if (elevio_floorSensor() != UNDEFINED) {
           elevatorDoor(OPEN);
-          if (wait3Sec()) {
+          if (wait3Sec() == COMPLETED) {
             elevatorDoor(CLOSE);
           }
         }
-        g_currentState = STILL;
+        elevatorStandstill();
       }
 
       break;
