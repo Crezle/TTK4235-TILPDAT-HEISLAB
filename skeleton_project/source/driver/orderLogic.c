@@ -77,7 +77,6 @@ int completeOrder() {
          (elevio_floorSensor() != UNDEFINED) &&
          (numberOfOrders() == 1 || g_currentDirection == g_order[i][1] ||
           (g_order[i][0] == 0) || g_order[i][0] == 3))) {
-      //printCurrentFloorUpdate();
       orderIsRemoved = removeAllOrdersOnFloor(g_order[i][0]);
 
       break;
@@ -148,16 +147,11 @@ int removeAllOrdersOnFloor(int removedFloor) {
 
 int wait3Sec() {
   int timer = 0;
-  //int seconds = 0;
-  //int tenths = 0;
   while (timer < 30) {
     if (elevio_stopButton() == NOT_PRESSED && elevio_obstruction() == ABSENT) {
       lookForNewOrders();
       nanosleep(&(struct timespec){0, 100000000L}, NULL);
       timer++;
-      //tenths = timer % 10;
-      //seconds = (timer - tenths) / 10;
-      //printDoorTimer(seconds, tenths);
     } else {
       if (elevio_stopButton()) {
         g_currentState = STOP;

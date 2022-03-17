@@ -5,10 +5,10 @@
 
 int main() {
 
-  // INITIALIZE SYSTEM
   elevio_init();
   initOrderSystem();
   initElevPos();
+  elevatorStandstill();
 
   while (1) {
     
