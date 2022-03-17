@@ -33,4 +33,4 @@ void printOrderArray();
  * @param[in] seconds is an int that indicates seconds
  * @param[in] tenths is an int that indicates tenths of a second
  */
-void printDoorTimer(int seconds, int tenths);
+void printDoorTimer(int timer);
