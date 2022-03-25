@@ -7,16 +7,11 @@ void initElevPos() {
   assert(
       (floor == UNDEFINED || floor == 0 || floor == 1 || floor == 2 || floor == 3) &&
       "Elevator not in a defined state");
-
-  if (floor == UNDEFINED) {
-  }
   while (floor == UNDEFINED) {
     elevio_motorDirection(DIRN_UP);
     g_currentDirection = UP;
     floor = elevio_floorSensor();
   }
-  elevio_motorDirection(DIRN_STOP);
-  g_currentState = STILL;
 }
 
 void elevatorDoor(int action) {

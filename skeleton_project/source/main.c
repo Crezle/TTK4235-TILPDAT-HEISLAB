@@ -8,6 +8,7 @@ int main() {
   elevio_init();
   initOrderSystem();
   initElevPos();
+  elevatorStandstill();
 
   while (1) {
     

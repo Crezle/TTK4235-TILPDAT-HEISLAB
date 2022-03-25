@@ -19,7 +19,9 @@ void printOrderArray() {
   }
 }
 
-void printDoorTimer(int seconds, int tenths) {
+void printDoorTimer(int timer) {
+  int tenths = timer % 10;
+  int seconds = (timer - tenths) / 10;
   printf("[%d.%ds out of 3.0s]\n", seconds, tenths);
   if (seconds == 3) {
     printf("\n");
