@@ -77,22 +77,7 @@ int completeOrder() {
          (elevio_floorSensor() != UNDEFINED) &&
          (numberOfOrders() == 1 || g_currentDirection == g_order[i][1] ||
           (g_order[i][0] == 0) || g_order[i][0] == 3))) {
-      int removedFloor = g_order[i][0];
-      //REMOVE ALL ORDERS ON FLOOR FUNC
-      for (int j = 0; j < MAX_ORDERS; j++) {
-        if (g_order[j][0] == removedFloor) {
-          if (g_order[j][2] == TRUE) {
-            elevio_buttonLamp(g_order[j][0], CAB, TURN_OFF);
-          } else {
-            elevio_buttonLamp(g_order[j][0], g_order[j][1], TURN_OFF);
-          }
-          g_order[j][0] = UNDEFINED;
-          g_order[j][1] = UNDEFINED;
-          g_order[j][2] = UNDEFINED;
-          orderIsRemoved++;
-        }
-      }
-      //
+      orderIsRemoved = removeAllOrdersOnFloor(g_order[i][0]);
       break;
     }
   }
@@ -141,7 +126,7 @@ int numberOfOrders() {
   return orders;
 }
 
-/* int removeAllOrdersOnFloor(int removedFloor) {
+int removeAllOrdersOnFloor(int removedFloor) {
   int orderIsRemoved = 0;
   for (int i = 0; i < MAX_ORDERS; i++) {
     if (g_order[i][0] == removedFloor) {
@@ -157,7 +142,7 @@ int numberOfOrders() {
     }
   }
   return orderIsRemoved;
-} */
+}
 
 int wait3Sec() {
   int timer = 0;

@@ -83,7 +83,7 @@ int numberOfOrders();
  * to @c UNDEFINED 
  * @return int value for amount of orders removed
  */
-//int removeAllOrdersOnFloor(int removedFloor);
+int removeAllOrdersOnFloor(int removedFloor);
 
 /**
  * @brief Makes system wait for 3 seconds by looping 30-times, adding one tenth of a second on each iteration.
