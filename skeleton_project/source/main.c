@@ -43,11 +43,8 @@ int main() {
       initOrderSystem();
       if (elevio_stopButton() == NOT_PRESSED) {
         elevio_stopLamp(0);
-        if (elevio_floorSensor() != UNDEFINED) {
-          elevatorDoor(OPEN);
-          if (wait3Sec() == COMPLETED) {
-            elevatorDoor(CLOSE);
-          }
+        if (wait3Sec() == COMPLETED) {
+          elevatorDoor(CLOSE);
         }
         elevatorStandstill();
       }

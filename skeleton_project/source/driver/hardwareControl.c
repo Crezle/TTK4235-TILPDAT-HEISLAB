@@ -24,6 +24,9 @@ void stopElevator() {
   g_currentState = STOP;
   resetButtons();
   elevio_stopLamp(1);
+  if (elevio_floorSensor() != UNDEFINED) {
+    elevatorDoor(OPEN);
+  }
 }
 
 void floorIndicatorLight() {
