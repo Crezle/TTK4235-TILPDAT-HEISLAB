@@ -2,9 +2,9 @@
 
 void initOrderSystem() {
   for (int i = 0; i < MAX_ORDERS; i++) {
-    g_order[i][0] = UNDEFINED; // j = 0 is ELEVATOR DESTINATION
-    g_order[i][1] = UNDEFINED; // j = 1 is ELEVATOR DIRECTION
-    g_order[i][2] = UNDEFINED; // j = 2 is CAB INDICATOR
+    g_order[i][0] = UNDEFINED;
+    g_order[i][1] = UNDEFINED;
+    g_order[i][2] = UNDEFINED;
   }
 }
 
@@ -54,7 +54,7 @@ void addOrderFromCab(int floor) {
   }
 }
 
-void lookForNewOrders() {
+void lookForAndAddNewOrders() {
   for (int f = 0; f < N_FLOORS; f++) {
     for (int b = 0; b < N_BUTTONS; b++) {
       int isBtnPressed = elevio_callButton(f, b);
@@ -77,7 +77,6 @@ int completeOrder() {
          (elevio_floorSensor() != UNDEFINED) &&
          (numberOfOrders() == 1 || g_currentDirection == g_order[i][1] ||
           (g_order[i][0] == 0) || g_order[i][0] == 3))) {
-      //printCurrentFloorUpdate();
       orderIsRemoved = removeAllOrdersOnFloor(g_order[i][0]);
 
       break;
@@ -148,16 +147,11 @@ int removeAllOrdersOnFloor(int removedFloor) {
 
 int wait3Sec() {
   int timer = 0;
-  //int seconds = 0;
-  //int tenths = 0;
   while (timer < 30) {
     if (elevio_stopButton() == NOT_PRESSED && elevio_obstruction() == ABSENT) {
-      lookForNewOrders();
+      lookForAndAddNewOrders();
       nanosleep(&(struct timespec){0, 100000000L}, NULL);
       timer++;
-      //tenths = timer % 10;
-      //seconds = (timer - tenths) / 10;
-      //printDoorTimer(seconds, tenths);
     } else {
       if (elevio_stopButton()) {
         g_currentState = STOP;

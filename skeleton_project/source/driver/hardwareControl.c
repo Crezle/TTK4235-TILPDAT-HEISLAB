@@ -9,7 +9,6 @@ void initElevPos() {
       "Elevator not in a defined state");
 
   if (floor == UNDEFINED) {
-    //printInitFloorUpdate();
   }
   while (floor == UNDEFINED) {
     elevio_motorDirection(DIRN_UP);
@@ -17,7 +16,6 @@ void initElevPos() {
     floor = elevio_floorSensor();
   }
   elevio_motorDirection(DIRN_STOP);
-  //printCurrentFloorUpdate();
   g_currentState = STILL;
 }
 

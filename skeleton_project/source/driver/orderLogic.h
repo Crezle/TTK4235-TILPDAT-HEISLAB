@@ -45,7 +45,7 @@ void addOrderFromCab(int floor);
  * 
  * @param[in,out] g_order is the array that changes if @c addOrderFromFloorPanel() or @c addOrderFromCab() is called
  */
-void lookForNewOrders();
+void lookForAndAddNewOrders();
 
 /**
  * @brief Checks if elevator is on a floor and has a direction which matches an order in @c g_order.

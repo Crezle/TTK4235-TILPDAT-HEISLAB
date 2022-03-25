@@ -5,7 +5,6 @@
 
 int main() {
 
-  // INITIALIZE SYSTEM
   elevio_init();
   initOrderSystem();
   initElevPos();
@@ -21,7 +20,7 @@ int main() {
     switch (g_currentState) {
 
     case STILL:
-      lookForNewOrders();
+      lookForAndNewOrders();
       moveElevator(chooseDirection());
       if (g_isDoorOpen && wait3Sec() == COMPLETED) {
         elevatorDoor(CLOSE);
@@ -29,7 +28,7 @@ int main() {
       break;
 
     case MOVING:
-      lookForNewOrders();
+      lookForAndNewOrders();
       if (completeOrder()) {
         elevatorStandstill();
         elevatorDoor(OPEN);
