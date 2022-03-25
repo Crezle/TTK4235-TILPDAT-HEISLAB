@@ -21,7 +21,7 @@ int main() {
     switch (g_currentState) {
 
     case STILL:
-      lookForAndNewOrders();
+      lookForAndAddNewOrders();
       moveElevator(chooseDirection());
       if (g_isDoorOpen && wait3Sec() == COMPLETED) {
         elevatorDoor(CLOSE);
@@ -29,7 +29,7 @@ int main() {
       break;
 
     case MOVING:
-      lookForAndNewOrders();
+      lookForAndAddNewOrders();
       if (completeOrder()) {
         elevatorStandstill();
         elevatorDoor(OPEN);
